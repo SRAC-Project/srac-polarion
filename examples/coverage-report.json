@@ -1,0 +1,25 @@
+{
+  "evidenceScope": "Polarion REST and SOAP Export",
+
+  "coverage": {
+    "artifactIdentity": "complete",
+    "workItems": "complete",
+    "relationships": "complete",
+
+    "collections": "partial",
+    "baselines": "partial",
+
+    "approvalStatus": "complete",
+    "approvalTiming": "partial",
+
+    "workflowSignatures": "unavailable",
+    "electronicSignatures": "unavailable"
+  },
+
+  "notes": [
+    "Collections and Baselines are distinct concepts.",
+    "Approval timing may be reconstructed from repository history.",
+    "Workflow signatures are outside approval-record coverage.",
+    "Missing evidence is reported explicitly."
+  ]
+}

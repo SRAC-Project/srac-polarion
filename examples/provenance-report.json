@@ -1,0 +1,15 @@
+{
+  "sourceSystem": "Polarion",
+
+  "sourceInstance": "polarion-demo",
+
+  "projectId": "SAFETY-DEMO",
+
+  "artifact": "REQ-001",
+
+  "resolvedRevision": "1250",
+
+  "retrievalMethod": "REST + SOAP",
+
+  "extractionTime": "2026-11-20T12:00:00Z"
+}
