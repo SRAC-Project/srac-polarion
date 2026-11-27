@@ -1,6 +1,7 @@
 """Guard the checked-in contract and presentation against format drift."""
 
 import json
+import io
 from pathlib import Path
 import unittest
 import xml.etree.ElementTree as ET
@@ -64,3 +65,17 @@ class DocumentConsistencyTests(unittest.TestCase):
             all_text = "\n".join(package.read(name).decode("utf-8") for name in package.namelist()
                                  if name.endswith(".xml"))
             self.assertNotIn("SRAC-compatible evidence records", all_text)
+
+    def test_saved_presentation_metadata_has_bound_types_and_correct_counts(self):
+        with zipfile.ZipFile(DECK) as package:
+            core = package.read("docProps/core.xml")
+            namespaces = dict(value for _, value in ET.iterparse(io.BytesIO(core), events=("start-ns",)))
+            node = ET.fromstring(core)
+            for element in node.iter():
+                value = element.get("{http://www.w3.org/2001/XMLSchema-instance}type")
+                if value and ":" in value:
+                    self.assertIn(value.split(":")[0], namespaces)
+            properties = ET.fromstring(package.read("docProps/app.xml"))
+            ns = "{http://schemas.openxmlformats.org/officeDocument/2006/extended-properties}"
+            self.assertEqual(properties.find(ns + "Slides").text, "12")
+            self.assertEqual(properties.find(ns + "Notes").text, "12")
