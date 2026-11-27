@@ -1,47 +1,29 @@
-Polarion Extraction Report
-Extraction Scope
-The extraction was performed using the evidence scope defined for the SRAC Polarion proof of concept.
+# Illustrative synthetic demonstration report
 
-Sources:
+**No live extraction was performed.** This report describes the offline generator
+using project-specific proposed evidence format 0.2.0. It does not demonstrate SRAC
+interoperability, Polarion X compatibility, certification or Siemens endorsement.
 
-Polarion REST
-Polarion SOAP
-Retrieved Evidence
-Artifact Identity
-Work Item Metadata
-Traceability Relationships
-Approval State
-Revision Information
-Provenance
-Each exported record contains:
+The generator invents REQ-001 at revision 1250, a link to unexported TC-001, and an
+ordinary approval state. It retrieves no data through REST or SOAP. The configured
+extraction timestamp is demonstration metadata. Classification, acceptance,
+approval timing and historical membership remain unknown.
 
-Source System
-Source Instance
-Project Identifier
-Resolved Revision
-Extraction Time
-Coverage Summary
-Evidence Type	Status
-Artifact Identity	Complete
-Work Items	Complete
-Relationships	Complete
-Collections	Partial
-Baselines	Partial
-Approval Status	Complete
-Approval Timing	Partial
-Workflow Signatures	Unavailable
-Electronic Signatures	Unavailable
-Known Gaps
-Historical collection membership may not be reconstructable.
-Deleted work items may not be returned by historical queries.
-Workflow signatures are outside approval-record coverage.
-Electronic signature evidence is not exported.
-Integrity
-SHA-256 supports integrity validation of exported artifacts.
+| Demonstration category | Coverage within the one-fixture scope |
+| --- | --- |
+| Artifact identity and required Work Item fields | complete |
+| Ordinary approval identity/state | complete |
+| Relationships | partial; one outgoing link and unexported target |
+| History, timing, membership and test executions | unavailable |
+| Collections, baselines, projects, attachments and comments | unavailable |
+| Live revision information and secure approval comment IDs | unavailable |
+| Workflow and electronic signatures | unavailable |
 
-Integrity validation does not imply:
+Complete means required category fields for this synthetic fixture only. It does
+not mean complete extraction from a Polarion project. Pagination, permissions and
+historical retrieval are explicitly not attempted.
 
-completeness,
-approval validity,
-regulatory compliance,
-safety compliance.
+Use `current-run.json` and the bundle validator to consume all three generated
+artifacts from one completed run. The manifest hashes each file, and the pointer
+pins the manifest. The top-level reference JSON files are illustrative copies,
+not publication pointers. Hashes establish byte integrity only.

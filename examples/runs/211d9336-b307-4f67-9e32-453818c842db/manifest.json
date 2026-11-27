@@ -1,0 +1,28 @@
+{
+  "format": "srac-polarion-proposed-evidence",
+  "formatVersion": "0.2.0",
+  "runId": "211d9336-b307-4f67-9e32-453818c842db",
+  "sourceSystem": "Polarion",
+  "sourceInstance": "polarion-demo",
+  "projectId": "SAFETY-DEMO",
+  "extractionTime": "2026-11-20T12:00:00Z",
+  "dataOrigin": "synthetic",
+  "liveExtractionPerformed": false,
+  "artifactKind": "manifest",
+  "state": "complete",
+  "notice": "Illustrative synthetic example; no live extraction or interoperability claim",
+  "files": {
+    "generated-export.json": {
+      "sha256": "aff5da3ba9424ebd74ff4215934acd54e9e873678b873694ca4bcf30dbae42bc",
+      "bytes": 1406
+    },
+    "generated-provenance.json": {
+      "sha256": "c1d1ba86d98aa6a693766207845be8697ad8a9e65a4cb200487041202c45562e",
+      "bytes": 967
+    },
+    "generated-coverage.json": {
+      "sha256": "64f013e8cd00c865c5b8bbed8c197ad388ae5698673e43c42c115cf2f1b2ff70",
+      "bytes": 2049
+    }
+  }
+}
