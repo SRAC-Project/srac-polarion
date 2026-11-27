@@ -1,23 +1,18 @@
-SRAC Polarion Exporter
-Status: Proof of Concept
+# Exporter
 
-The exporter is a read-only implementation that combines:
+Run `python exporter/export.py` from the repository root, or `python export.py`
+from this directory. Python 3.9+ and its standard library are sufficient.
 
-Polarion REST APIs
-Polarion SOAP APIs
-Goals:
+`config.json` supplies `sourceInstance`, `projectId`, and `exportTime`.
+The generator writes `generated-export.json`, `generated-provenance.json`, and
+`generated-coverage.json` to the repository's `examples/` directory regardless
+of the working directory. These are deterministic synthetic artifacts, not live
+Polarion evidence. Coverage reports gaps explicitly and provenance records the
+export file's SHA-256 digest.
 
-Export engineering evidence
-Preserve provenance
-Preserve revision context
-Report evidence coverage
-Report evidence gaps explicitly
-The exporter does not modify Polarion data.
+`rest_client.connect()` and `soap_client.connect()` only print a placeholder.
+They make no connection and are not invoked by the offline generator.
+Live REST/SOAP integration and a sanitized real demo export await Petr's review.
 
-The exporter does not provide safety certification or compliance certification.
-
-Output Artifacts:
-
-SRAC Evidence Record
-Coverage Report
-Provenance Report
+See the [main README](../README.md) for configuration, output semantics, planned
+integration scope, and verification instructions.

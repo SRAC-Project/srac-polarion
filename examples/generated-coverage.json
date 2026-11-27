@@ -1,0 +1,41 @@
+{
+  "sourceInstance": "polarion-demo",
+  "projectId": "SAFETY-DEMO",
+  "extractionTime": "2026-11-20T12:00:00Z",
+  "dataOrigin": "synthetic",
+  "evidenceScope": "Offline synthetic demonstration; no live Polarion evidence",
+  "liveExtractionPerformed": false,
+  "coverage": {
+    "artifactIdentity": "complete",
+    "workItems": "partial",
+    "relationships": "partial",
+    "collections": "unavailable",
+    "baselines": "unavailable",
+    "approvalStatus": "complete",
+    "approvalTiming": "unavailable",
+    "workflowSignatures": "unavailable",
+    "electronicSignatures": "unavailable",
+    "projects": "unavailable",
+    "attachments": "unavailable",
+    "comments": "unavailable",
+    "history": "unavailable",
+    "approvalChangeHistory": "unavailable",
+    "secureApprovalCommentIds": "unavailable",
+    "revisionInformation": "unavailable"
+  },
+  "counts": {
+    "workItems": 1,
+    "relationships": 1,
+    "approvals": 1
+  },
+  "notes": [
+    "Coverage states describe only the synthetic demonstration record.",
+    "Complete means populated for that record, not complete Polarion extraction.",
+    "Only REQ-001 is exported; linked target TC-001 is not included.",
+    "Approval timing is unknown; no repository history was retrieved.",
+    "The revision is synthetic; live revision information is unavailable.",
+    "Project identity is configured; project metadata is not retrieved.",
+    "Collections and baselines are distinct and neither is extracted.",
+    "All live REST and SOAP extraction remains unimplemented pending review."
+  ]
+}
