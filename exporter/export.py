@@ -1,148 +1,125 @@
-"""Generate a deterministic, offline SRAC demonstration export.
+"""Generate project-specific proposed evidence v0.2.0 using synthetic data only."""
 
-Uses only the Python standard library. No Polarion connection is attempted.
-"""
-
+from datetime import datetime
 import hashlib
 import json
-from datetime import datetime
 from pathlib import Path
 import sys
+from uuid import uuid4
 
+if __package__:
+    from .bundle import publish_bundle, validate_current
+    from .contract import FORMAT, VERSION, json_bytes, validate_documents
+    from .history import derive_approval_timing
+else:
+    from bundle import publish_bundle, validate_current
+    from contract import FORMAT, VERSION, json_bytes, validate_documents
+    from history import derive_approval_timing
 
-ROOT = Path(__file__).resolve().parent.parent
+ROOT = Path(__file__).resolve().parents[1]
 CONFIG = Path(__file__).resolve().with_name("config.json")
 
 
 def read_config(path):
-    """Validate required metadata before creating any output files."""
     config = json.loads(path.read_text(encoding="utf-8"))
     if not isinstance(config, dict):
-        raise ValueError("config.json must contain a JSON object")
+        raise ValueError("config.json must contain an object")
     for key in ("sourceInstance", "projectId", "exportTime"):
-        value = config.get(key)
-        if not isinstance(value, str) or not value.strip():
+        if not isinstance(config.get(key), str) or not config[key].strip():
             raise ValueError("config.json requires a non-empty string: " + key)
     timestamp = config["exportTime"]
-    # Require an explicit timezone; export time is independent of revision.
-    parsed = datetime.fromisoformat(
-        timestamp[:-1] + "+00:00" if timestamp.endswith("Z") else timestamp
-    )
+    parsed = datetime.fromisoformat(timestamp.replace("Z", "+00:00"))
     if "T" not in timestamp or parsed.tzinfo is None:
-        raise ValueError("exportTime must be an ISO 8601 timestamp with a timezone")
+        raise ValueError("exportTime requires an ISO 8601 timestamp with a timezone")
     return config
 
 
-def json_bytes(value):
-    """Stable UTF-8 serialization, also used for the recorded file digest."""
-    return (json.dumps(value, indent=2, ensure_ascii=False) + "\n").encode("utf-8")
-
-
-def generate(config):
-    """Build synthetic evidence and reports without asserting live retrieval."""
+def generate(config, run_id=None):
+    """Produce documents with shared identity; coverage is scoped to one fixture."""
     metadata = {
-        "sourceInstance": config["sourceInstance"],
-        "projectId": config["projectId"],
-        "extractionTime": config["exportTime"],
-        "dataOrigin": "synthetic",
+        "format": FORMAT, "formatVersion": VERSION,
+        "runId": run_id or str(uuid4()), "sourceSystem": "Polarion",
+        "sourceInstance": config["sourceInstance"], "projectId": config["projectId"],
+        "extractionTime": config["exportTime"], "dataOrigin": "synthetic",
+        "liveExtractionPerformed": False,
+        "notice": "Illustrative synthetic example; no live extraction or interoperability claim",
     }
     record = {
-        **metadata,
-        "sourceSystem": "Polarion",
-        "objectId": "REQ-001",
-        "objectType": "Requirement",
-        "resolvedRevision": "1250",
-        "classification": {"safetyClass": "ASIL-B"},
-        "links": [{
-            "targetObject": "TC-001",
-            "targetProject": config["projectId"],
-            "targetRevision": "1250",
-            "role": "verified_by",
-            "direction": "outgoing",
-            "suspect": False,
-        }],
-        "approvals": [{
-            "approver": "demo-user",
-            "state": "approved",
-            "approvalChangeTime": None,
-            "approvalChangeSource": None,
-            "timeConfidence": "unknown",
-        }],
-    }
-    export_bytes = json_bytes(record)
-    provenance = {
-        **metadata,
-        "sourceSystem": record["sourceSystem"],
-        "artifact": record["objectId"],
-        "resolvedRevision": record["resolvedRevision"],
-        "retrievalMethod": "offline synthetic generator",
-        "liveExtractionPerformed": False,
-        "exportFile": "generated-export.json",
-        "sha256": hashlib.sha256(export_bytes).hexdigest(),
-        "notes": [
-            "Identifiers, revision, link and approval state are synthetic examples.",
-            "extractionTime is the configured demonstration time, not a live retrieval time.",
-            "The digest covers the exact UTF-8 bytes of generated-export.json only.",
-            "Integrity does not establish completeness, approval validity or compliance.",
-        ],
+        **metadata, "artifactKind": "export",
+        "objectId": "REQ-001", "objectType": "Requirement",
+        "evidenceKind": "requirement", "resolvedRevision": "1250",
+        "classification": {"safetyClass": None, "status": "unknown",
+                           "source": None},
+        "acceptance": {"value": None, "status": "unknown", "source": None},
+        "links": [{"targetObject": "TC-001", "targetProject": config["projectId"],
+                   "targetRevision": "1250", "role": "verified_by",
+                   "direction": "outgoing", "suspect": False,
+                   "targetResolution": "not_exported"}],
+        "approvals": [{"approver": "demo-user", "state": "approved",
+                       **derive_approval_timing("demo-user", "approved", [], False)}],
+        "historicalMembership": {"status": "unknown", "members": None,
+                                 "reason": "No historical membership evidence was retrieved"},
     }
     coverage = {
-        **metadata,
-        "evidenceScope": "Offline synthetic demonstration; no live Polarion evidence",
-        "liveExtractionPerformed": False,
+        **metadata, "artifactKind": "coverage",
+        "evidenceScope": {
+            "selection": [{"projectId": config["projectId"], "objectId": "REQ-001",
+                           "resolvedRevision": "1250"}],
+            "basis": "one synthetic fixture, not a project inventory",
+        },
         "coverage": {
-            "artifactIdentity": "complete",
-            "workItems": "partial",
-            "relationships": "partial",
-            "collections": "unavailable",
-            "baselines": "unavailable",
-            "approvalStatus": "complete",
-            "approvalTiming": "unavailable",
-            "workflowSignatures": "unavailable",
-            "electronicSignatures": "unavailable",
-            "projects": "unavailable",
-            "attachments": "unavailable",
-            "comments": "unavailable",
-            "history": "unavailable",
-            "approvalChangeHistory": "unavailable",
-            "secureApprovalCommentIds": "unavailable",
-            "revisionInformation": "unavailable",
+            "artifactIdentity": "complete", "workItems": "complete",
+            "relationships": "partial", "approvalStatus": "complete",
+            **{k: "unavailable" for k in (
+                "approvalTiming", "collections", "baselines", "historicalMembership",
+                "workflowSignatures", "electronicSignatures", "projects", "attachments",
+                "comments", "history", "approvalChangeHistory", "secureApprovalCommentIds",
+                "revisionInformation", "testExecutions")},
         },
-        "counts": {
-            "workItems": 1,
-            "relationships": len(record["links"]),
-            "approvals": len(record["approvals"]),
-        },
+        "counts": {"workItems": 1, "relationships": 1, "approvals": 1, "testExecutions": 0},
+        "retrievalGaps": {"pagination": "not_attempted", "permissions": "not_attempted",
+                          "history": "not_attempted"},
         "notes": [
-            "Coverage states describe only the synthetic demonstration record.",
-            "Complete means populated for that record, not complete Polarion extraction.",
-            "Only REQ-001 is exported; linked target TC-001 is not included.",
-            "Approval timing is unknown; no repository history was retrieved.",
-            "The revision is synthetic; live revision information is unavailable.",
-            "Project identity is configured; project metadata is not retrieved.",
-            "Collections and baselines are distinct and neither is extracted.",
-            "All live REST and SOAP extraction remains unimplemented pending review.",
+            "Complete applies only to required fields of the single declared synthetic fixture.",
+            "TC-001 is not exported; incoming and cross-project link coverage is untested.",
+            "No live pagination, permissions, history or project completeness was evaluated.",
+            "Historical values of current items do not prove historical membership.",
+            "Approval state does not establish classification, acceptance or signature validity.",
         ],
     }
-    return {
-        "generated-export.json": export_bytes,
-        "generated-provenance.json": json_bytes(provenance),
-        "generated-coverage.json": json_bytes(coverage),
+    provenance = {
+        **metadata, "artifactKind": "provenance",
+        "artifact": record["objectId"], "resolvedRevision": record["resolvedRevision"],
+        "retrievalMethod": "offline synthetic generator",
+        "exportFile": "generated-export.json",
+        "sha256": hashlib.sha256(json_bytes(record)).hexdigest(),
+        "notes": [
+            "Identity, revision, links and approval state are invented fixture values.",
+            "extractionTime is the configured demonstration timestamp, not a server retrieval time.",
+            "SHA-256 checks bytes only; it establishes neither authenticity nor completeness.",
+        ],
     }
+    documents = {"generated-export.json": record, "generated-provenance.json": provenance,
+                 "generated-coverage.json": coverage}
+    validate_documents(documents)
+    return documents
 
 
 def main():
     try:
-        artifacts = generate(read_config(CONFIG))
-        output = ROOT / "examples"
-        output.mkdir(parents=True, exist_ok=True)
-        for name, content in artifacts.items():
-            (output / name).write_bytes(content)
-            print("Wrote examples/" + name)
-    except (OSError, ValueError) as error:
+        if sys.argv[1:] == ["--validate"]:
+            result = validate_current(ROOT / "examples")
+            print("Validated completed run " + result["manifest"]["runId"])
+        elif sys.argv[1:]:
+            raise ValueError("Usage: python exporter/export.py [--validate]")
+        else:
+            directory = publish_bundle(ROOT / "examples", generate(read_config(CONFIG)))
+            print("Published examples/runs/" + directory.name)
+            print("Resolve examples/current-run.json with --validate before consumption.")
+            print("Synthetic demonstration only; no Polarion connection was made.")
+    except (OSError, ValueError, KeyError, TypeError) as error:
         print("Export failed: " + str(error), file=sys.stderr)
         return 1
-    print("Offline synthetic PoC complete; no Polarion connection was made.")
     return 0
 
 

@@ -1,0 +1,53 @@
+{
+  "format": "srac-polarion-proposed-evidence",
+  "formatVersion": "0.2.0",
+  "runId": "211d9336-b307-4f67-9e32-453818c842db",
+  "sourceSystem": "Polarion",
+  "sourceInstance": "polarion-demo",
+  "projectId": "SAFETY-DEMO",
+  "extractionTime": "2026-11-20T12:00:00Z",
+  "dataOrigin": "synthetic",
+  "liveExtractionPerformed": false,
+  "notice": "Illustrative synthetic example; no live extraction or interoperability claim",
+  "artifactKind": "export",
+  "objectId": "REQ-001",
+  "objectType": "Requirement",
+  "evidenceKind": "requirement",
+  "resolvedRevision": "1250",
+  "classification": {
+    "safetyClass": null,
+    "status": "unknown",
+    "source": null
+  },
+  "acceptance": {
+    "value": null,
+    "status": "unknown",
+    "source": null
+  },
+  "links": [
+    {
+      "targetObject": "TC-001",
+      "targetProject": "SAFETY-DEMO",
+      "targetRevision": "1250",
+      "role": "verified_by",
+      "direction": "outgoing",
+      "suspect": false,
+      "targetResolution": "not_exported"
+    }
+  ],
+  "approvals": [
+    {
+      "approver": "demo-user",
+      "state": "approved",
+      "approvalChangeTime": null,
+      "timeConfidence": "unknown",
+      "timingEvidence": null,
+      "reason": "Complete approval history is unavailable"
+    }
+  ],
+  "historicalMembership": {
+    "status": "unknown",
+    "members": null,
+    "reason": "No historical membership evidence was retrieved"
+  }
+}

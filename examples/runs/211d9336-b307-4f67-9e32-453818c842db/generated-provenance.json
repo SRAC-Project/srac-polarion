@@ -1,0 +1,23 @@
+{
+  "format": "srac-polarion-proposed-evidence",
+  "formatVersion": "0.2.0",
+  "runId": "211d9336-b307-4f67-9e32-453818c842db",
+  "sourceSystem": "Polarion",
+  "sourceInstance": "polarion-demo",
+  "projectId": "SAFETY-DEMO",
+  "extractionTime": "2026-11-20T12:00:00Z",
+  "dataOrigin": "synthetic",
+  "liveExtractionPerformed": false,
+  "notice": "Illustrative synthetic example; no live extraction or interoperability claim",
+  "artifactKind": "provenance",
+  "artifact": "REQ-001",
+  "resolvedRevision": "1250",
+  "retrievalMethod": "offline synthetic generator",
+  "exportFile": "generated-export.json",
+  "sha256": "aff5da3ba9424ebd74ff4215934acd54e9e873678b873694ca4bcf30dbae42bc",
+  "notes": [
+    "Identity, revision, links and approval state are invented fixture values.",
+    "extractionTime is the configured demonstration timestamp, not a server retrieval time.",
+    "SHA-256 checks bytes only; it establishes neither authenticity nor completeness."
+  ]
+}

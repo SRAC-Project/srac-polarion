@@ -1,18 +1,19 @@
-# Exporter
+# Offline exporter
 
-Run `python exporter/export.py` from the repository root, or `python export.py`
-from this directory. Python 3.9+ and its standard library are sufficient.
+Run `python exporter/export.py` at the repository root, or `python export.py`
+from this directory. Run the same command with `--validate` to check the current
+completed bundle. Python 3.9+ and its standard library are sufficient.
 
-`config.json` supplies `sourceInstance`, `projectId`, and `exportTime`.
-The generator writes `generated-export.json`, `generated-provenance.json`, and
-`generated-coverage.json` to the repository's `examples/` directory regardless
-of the working directory. These are deterministic synthetic artifacts, not live
-Polarion evidence. Coverage reports gaps explicitly and provenance records the
-export file's SHA-256 digest.
+`config.json` provides synthetic metadata only. `export.py` generates the strict
+project-specific proposed evidence fixture profile 0.2.0. `contract.py` checks the
+versioned schema and cross-file invariants. `bundle.py` stages all three artifacts,
+publishes an immutable run and atomically changes `examples/current-run.json` last.
+Consumers must use `validate_current()` and its returned checked snapshot.
 
-`rest_client.connect()` and `soap_client.connect()` only print a placeholder.
-They make no connection and are not invoked by the offline generator.
-Live REST/SOAP integration and a sanitized real demo export await Petr's review.
+`history.py` exercises conservative rules on normalized synthetic transitions.
+It performs no retrieval. `rest_client.connect()` and `soap_client.connect()`
+remain placeholders. Live extraction requires separate implementation, target
+capability checks and independently checked expected results.
 
-See the [main README](../README.md) for configuration, output semantics, planned
-integration scope, and verification instructions.
+See the [main README](../README.md), [contract](../docs/mapping-specification.md)
+and [publication protocol](../docs/provenance-model.md).

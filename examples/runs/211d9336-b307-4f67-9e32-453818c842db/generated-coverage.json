@@ -1,0 +1,61 @@
+{
+  "format": "srac-polarion-proposed-evidence",
+  "formatVersion": "0.2.0",
+  "runId": "211d9336-b307-4f67-9e32-453818c842db",
+  "sourceSystem": "Polarion",
+  "sourceInstance": "polarion-demo",
+  "projectId": "SAFETY-DEMO",
+  "extractionTime": "2026-11-20T12:00:00Z",
+  "dataOrigin": "synthetic",
+  "liveExtractionPerformed": false,
+  "notice": "Illustrative synthetic example; no live extraction or interoperability claim",
+  "artifactKind": "coverage",
+  "evidenceScope": {
+    "selection": [
+      {
+        "projectId": "SAFETY-DEMO",
+        "objectId": "REQ-001",
+        "resolvedRevision": "1250"
+      }
+    ],
+    "basis": "one synthetic fixture, not a project inventory"
+  },
+  "coverage": {
+    "artifactIdentity": "complete",
+    "workItems": "complete",
+    "relationships": "partial",
+    "approvalStatus": "complete",
+    "approvalTiming": "unavailable",
+    "collections": "unavailable",
+    "baselines": "unavailable",
+    "historicalMembership": "unavailable",
+    "workflowSignatures": "unavailable",
+    "electronicSignatures": "unavailable",
+    "projects": "unavailable",
+    "attachments": "unavailable",
+    "comments": "unavailable",
+    "history": "unavailable",
+    "approvalChangeHistory": "unavailable",
+    "secureApprovalCommentIds": "unavailable",
+    "revisionInformation": "unavailable",
+    "testExecutions": "unavailable"
+  },
+  "counts": {
+    "workItems": 1,
+    "relationships": 1,
+    "approvals": 1,
+    "testExecutions": 0
+  },
+  "retrievalGaps": {
+    "pagination": "not_attempted",
+    "permissions": "not_attempted",
+    "history": "not_attempted"
+  },
+  "notes": [
+    "Complete applies only to required fields of the single declared synthetic fixture.",
+    "TC-001 is not exported; incoming and cross-project link coverage is untested.",
+    "No live pagination, permissions, history or project completeness was evaluated.",
+    "Historical values of current items do not prove historical membership.",
+    "Approval state does not establish classification, acceptance or signature validity."
+  ]
+}

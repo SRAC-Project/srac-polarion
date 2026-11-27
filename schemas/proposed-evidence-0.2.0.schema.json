@@ -1,0 +1,824 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/SRAC-Project/srac-polarion/blob/main/schemas/proposed-evidence-0.2.0.schema.json",
+  "title": "Project-specific proposed evidence 0.2.0 (synthetic fixture profile)",
+  "description": "No external SRAC schema or interoperability is asserted. Future live profiles require a contract revision.",
+  "oneOf": [
+    {
+      "$ref": "#/$defs/export"
+    },
+    {
+      "$ref": "#/$defs/coverage"
+    },
+    {
+      "$ref": "#/$defs/provenance"
+    },
+    {
+      "$ref": "#/$defs/manifest"
+    },
+    {
+      "$ref": "#/$defs/pointer"
+    }
+  ],
+  "$defs": {
+    "link": {
+      "type": "object",
+      "properties": {
+        "targetObject": {
+          "type": "string",
+          "minLength": 1
+        },
+        "targetProject": {
+          "type": "string",
+          "minLength": 1
+        },
+        "targetRevision": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "role": {
+          "type": "string",
+          "minLength": 1
+        },
+        "direction": {
+          "enum": [
+            "incoming",
+            "outgoing"
+          ]
+        },
+        "suspect": {
+          "type": [
+            "boolean",
+            "null"
+          ]
+        },
+        "targetResolution": {
+          "enum": [
+            "not_exported",
+            "resolved",
+            "unresolved",
+            "permission_denied"
+          ]
+        }
+      },
+      "required": [
+        "targetObject",
+        "targetProject",
+        "targetRevision",
+        "role",
+        "direction",
+        "suspect",
+        "targetResolution"
+      ],
+      "additionalProperties": false
+    },
+    "approval": {
+      "type": "object",
+      "properties": {
+        "approver": {
+          "type": "string",
+          "minLength": 1
+        },
+        "state": {
+          "enum": [
+            "pending",
+            "approved",
+            "disapproved"
+          ]
+        },
+        "approvalChangeTime": {
+          "type": "null"
+        },
+        "timeConfidence": {
+          "const": "unknown"
+        },
+        "timingEvidence": {
+          "type": "null"
+        },
+        "reason": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "approver",
+        "state",
+        "approvalChangeTime",
+        "timeConfidence",
+        "timingEvidence",
+        "reason"
+      ],
+      "additionalProperties": false
+    },
+    "export": {
+      "type": "object",
+      "properties": {
+        "format": {
+          "const": "srac-polarion-proposed-evidence"
+        },
+        "formatVersion": {
+          "const": "0.2.0"
+        },
+        "runId": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+        },
+        "sourceSystem": {
+          "const": "Polarion"
+        },
+        "sourceInstance": {
+          "type": "string",
+          "minLength": 1
+        },
+        "projectId": {
+          "type": "string",
+          "minLength": 1
+        },
+        "extractionTime": {
+          "type": "string",
+          "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(?:\\.\\d+)?(?:Z|[+-]\\d{2}:\\d{2})$"
+        },
+        "dataOrigin": {
+          "const": "synthetic"
+        },
+        "liveExtractionPerformed": {
+          "const": false
+        },
+        "notice": {
+          "const": "Illustrative synthetic example; no live extraction or interoperability claim"
+        },
+        "artifactKind": {
+          "const": "export"
+        },
+        "objectId": {
+          "type": "string",
+          "minLength": 1
+        },
+        "objectType": {
+          "const": "Requirement"
+        },
+        "evidenceKind": {
+          "const": "requirement"
+        },
+        "resolvedRevision": {
+          "type": "string",
+          "minLength": 1
+        },
+        "classification": {
+          "type": "object",
+          "properties": {
+            "safetyClass": {
+              "type": "null"
+            },
+            "status": {
+              "const": "unknown"
+            },
+            "source": {
+              "type": "null"
+            }
+          },
+          "required": [
+            "safetyClass",
+            "status",
+            "source"
+          ],
+          "additionalProperties": false
+        },
+        "acceptance": {
+          "type": "object",
+          "properties": {
+            "value": {
+              "type": "null"
+            },
+            "status": {
+              "const": "unknown"
+            },
+            "source": {
+              "type": "null"
+            }
+          },
+          "required": [
+            "value",
+            "status",
+            "source"
+          ],
+          "additionalProperties": false
+        },
+        "links": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/link"
+          }
+        },
+        "approvals": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/approval"
+          }
+        },
+        "historicalMembership": {
+          "type": "object",
+          "properties": {
+            "status": {
+              "const": "unknown"
+            },
+            "members": {
+              "type": "null"
+            },
+            "reason": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "required": [
+            "status",
+            "members",
+            "reason"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "required": [
+        "format",
+        "formatVersion",
+        "runId",
+        "sourceSystem",
+        "sourceInstance",
+        "projectId",
+        "extractionTime",
+        "dataOrigin",
+        "liveExtractionPerformed",
+        "notice",
+        "artifactKind",
+        "objectId",
+        "objectType",
+        "evidenceKind",
+        "resolvedRevision",
+        "classification",
+        "acceptance",
+        "links",
+        "approvals",
+        "historicalMembership"
+      ],
+      "additionalProperties": false
+    },
+    "coverage": {
+      "type": "object",
+      "properties": {
+        "format": {
+          "const": "srac-polarion-proposed-evidence"
+        },
+        "formatVersion": {
+          "const": "0.2.0"
+        },
+        "runId": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+        },
+        "sourceSystem": {
+          "const": "Polarion"
+        },
+        "sourceInstance": {
+          "type": "string",
+          "minLength": 1
+        },
+        "projectId": {
+          "type": "string",
+          "minLength": 1
+        },
+        "extractionTime": {
+          "type": "string",
+          "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(?:\\.\\d+)?(?:Z|[+-]\\d{2}:\\d{2})$"
+        },
+        "dataOrigin": {
+          "const": "synthetic"
+        },
+        "liveExtractionPerformed": {
+          "const": false
+        },
+        "notice": {
+          "const": "Illustrative synthetic example; no live extraction or interoperability claim"
+        },
+        "artifactKind": {
+          "const": "coverage"
+        },
+        "evidenceScope": {
+          "type": "object",
+          "properties": {
+            "selection": {
+              "type": "array",
+              "minItems": 1,
+              "items": {
+                "type": "object",
+                "properties": {
+                  "projectId": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "objectId": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "resolvedRevision": {
+                    "type": "string",
+                    "minLength": 1
+                  }
+                },
+                "required": [
+                  "projectId",
+                  "objectId",
+                  "resolvedRevision"
+                ],
+                "additionalProperties": false
+              }
+            },
+            "basis": {
+              "const": "one synthetic fixture, not a project inventory"
+            }
+          },
+          "required": [
+            "selection",
+            "basis"
+          ],
+          "additionalProperties": false
+        },
+        "coverage": {
+          "type": "object",
+          "properties": {
+            "artifactIdentity": {
+              "enum": [
+                "complete",
+                "partial",
+                "unavailable"
+              ]
+            },
+            "workItems": {
+              "enum": [
+                "complete",
+                "partial",
+                "unavailable"
+              ]
+            },
+            "relationships": {
+              "enum": [
+                "complete",
+                "partial",
+                "unavailable"
+              ]
+            },
+            "approvalStatus": {
+              "enum": [
+                "complete",
+                "partial",
+                "unavailable"
+              ]
+            },
+            "approvalTiming": {
+              "enum": [
+                "complete",
+                "partial",
+                "unavailable"
+              ]
+            },
+            "collections": {
+              "enum": [
+                "complete",
+                "partial",
+                "unavailable"
+              ]
+            },
+            "baselines": {
+              "enum": [
+                "complete",
+                "partial",
+                "unavailable"
+              ]
+            },
+            "historicalMembership": {
+              "enum": [
+                "complete",
+                "partial",
+                "unavailable"
+              ]
+            },
+            "workflowSignatures": {
+              "enum": [
+                "complete",
+                "partial",
+                "unavailable"
+              ]
+            },
+            "electronicSignatures": {
+              "enum": [
+                "complete",
+                "partial",
+                "unavailable"
+              ]
+            },
+            "projects": {
+              "enum": [
+                "complete",
+                "partial",
+                "unavailable"
+              ]
+            },
+            "attachments": {
+              "enum": [
+                "complete",
+                "partial",
+                "unavailable"
+              ]
+            },
+            "comments": {
+              "enum": [
+                "complete",
+                "partial",
+                "unavailable"
+              ]
+            },
+            "history": {
+              "enum": [
+                "complete",
+                "partial",
+                "unavailable"
+              ]
+            },
+            "approvalChangeHistory": {
+              "enum": [
+                "complete",
+                "partial",
+                "unavailable"
+              ]
+            },
+            "secureApprovalCommentIds": {
+              "enum": [
+                "complete",
+                "partial",
+                "unavailable"
+              ]
+            },
+            "revisionInformation": {
+              "enum": [
+                "complete",
+                "partial",
+                "unavailable"
+              ]
+            },
+            "testExecutions": {
+              "enum": [
+                "complete",
+                "partial",
+                "unavailable"
+              ]
+            }
+          },
+          "required": [
+            "artifactIdentity",
+            "workItems",
+            "relationships",
+            "approvalStatus",
+            "approvalTiming",
+            "collections",
+            "baselines",
+            "historicalMembership",
+            "workflowSignatures",
+            "electronicSignatures",
+            "projects",
+            "attachments",
+            "comments",
+            "history",
+            "approvalChangeHistory",
+            "secureApprovalCommentIds",
+            "revisionInformation",
+            "testExecutions"
+          ],
+          "additionalProperties": false
+        },
+        "counts": {
+          "type": "object",
+          "properties": {
+            "workItems": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "relationships": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "approvals": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "testExecutions": {
+              "type": "integer",
+              "minimum": 0
+            }
+          },
+          "required": [
+            "workItems",
+            "relationships",
+            "approvals",
+            "testExecutions"
+          ],
+          "additionalProperties": false
+        },
+        "retrievalGaps": {
+          "type": "object",
+          "properties": {
+            "pagination": {
+              "const": "not_attempted"
+            },
+            "permissions": {
+              "const": "not_attempted"
+            },
+            "history": {
+              "const": "not_attempted"
+            }
+          },
+          "required": [
+            "pagination",
+            "permissions",
+            "history"
+          ],
+          "additionalProperties": false
+        },
+        "notes": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      },
+      "required": [
+        "format",
+        "formatVersion",
+        "runId",
+        "sourceSystem",
+        "sourceInstance",
+        "projectId",
+        "extractionTime",
+        "dataOrigin",
+        "liveExtractionPerformed",
+        "notice",
+        "artifactKind",
+        "evidenceScope",
+        "coverage",
+        "counts",
+        "retrievalGaps",
+        "notes"
+      ],
+      "additionalProperties": false
+    },
+    "provenance": {
+      "type": "object",
+      "properties": {
+        "format": {
+          "const": "srac-polarion-proposed-evidence"
+        },
+        "formatVersion": {
+          "const": "0.2.0"
+        },
+        "runId": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+        },
+        "sourceSystem": {
+          "const": "Polarion"
+        },
+        "sourceInstance": {
+          "type": "string",
+          "minLength": 1
+        },
+        "projectId": {
+          "type": "string",
+          "minLength": 1
+        },
+        "extractionTime": {
+          "type": "string",
+          "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(?:\\.\\d+)?(?:Z|[+-]\\d{2}:\\d{2})$"
+        },
+        "dataOrigin": {
+          "const": "synthetic"
+        },
+        "liveExtractionPerformed": {
+          "const": false
+        },
+        "notice": {
+          "const": "Illustrative synthetic example; no live extraction or interoperability claim"
+        },
+        "artifactKind": {
+          "const": "provenance"
+        },
+        "artifact": {
+          "type": "string",
+          "minLength": 1
+        },
+        "resolvedRevision": {
+          "type": "string",
+          "minLength": 1
+        },
+        "retrievalMethod": {
+          "const": "offline synthetic generator"
+        },
+        "exportFile": {
+          "const": "generated-export.json"
+        },
+        "sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "notes": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      },
+      "required": [
+        "format",
+        "formatVersion",
+        "runId",
+        "sourceSystem",
+        "sourceInstance",
+        "projectId",
+        "extractionTime",
+        "dataOrigin",
+        "liveExtractionPerformed",
+        "notice",
+        "artifactKind",
+        "artifact",
+        "resolvedRevision",
+        "retrievalMethod",
+        "exportFile",
+        "sha256",
+        "notes"
+      ],
+      "additionalProperties": false
+    },
+    "manifest": {
+      "type": "object",
+      "properties": {
+        "format": {
+          "const": "srac-polarion-proposed-evidence"
+        },
+        "formatVersion": {
+          "const": "0.2.0"
+        },
+        "runId": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+        },
+        "sourceSystem": {
+          "const": "Polarion"
+        },
+        "sourceInstance": {
+          "type": "string",
+          "minLength": 1
+        },
+        "projectId": {
+          "type": "string",
+          "minLength": 1
+        },
+        "extractionTime": {
+          "type": "string",
+          "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(?:\\.\\d+)?(?:Z|[+-]\\d{2}:\\d{2})$"
+        },
+        "dataOrigin": {
+          "const": "synthetic"
+        },
+        "liveExtractionPerformed": {
+          "const": false
+        },
+        "notice": {
+          "const": "Illustrative synthetic example; no live extraction or interoperability claim"
+        },
+        "artifactKind": {
+          "const": "manifest"
+        },
+        "state": {
+          "const": "complete"
+        },
+        "files": {
+          "type": "object",
+          "properties": {
+            "generated-export.json": {
+              "type": "object",
+              "properties": {
+                "sha256": {
+                  "type": "string",
+                  "pattern": "^[0-9a-f]{64}$"
+                },
+                "bytes": {
+                  "type": "integer",
+                  "minimum": 0
+                }
+              },
+              "required": [
+                "sha256",
+                "bytes"
+              ],
+              "additionalProperties": false
+            },
+            "generated-provenance.json": {
+              "type": "object",
+              "properties": {
+                "sha256": {
+                  "type": "string",
+                  "pattern": "^[0-9a-f]{64}$"
+                },
+                "bytes": {
+                  "type": "integer",
+                  "minimum": 0
+                }
+              },
+              "required": [
+                "sha256",
+                "bytes"
+              ],
+              "additionalProperties": false
+            },
+            "generated-coverage.json": {
+              "type": "object",
+              "properties": {
+                "sha256": {
+                  "type": "string",
+                  "pattern": "^[0-9a-f]{64}$"
+                },
+                "bytes": {
+                  "type": "integer",
+                  "minimum": 0
+                }
+              },
+              "required": [
+                "sha256",
+                "bytes"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "required": [
+            "generated-export.json",
+            "generated-provenance.json",
+            "generated-coverage.json"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "required": [
+        "format",
+        "formatVersion",
+        "runId",
+        "sourceSystem",
+        "sourceInstance",
+        "projectId",
+        "extractionTime",
+        "dataOrigin",
+        "liveExtractionPerformed",
+        "notice",
+        "artifactKind",
+        "state",
+        "files"
+      ],
+      "additionalProperties": false
+    },
+    "pointer": {
+      "type": "object",
+      "properties": {
+        "format": {
+          "const": "srac-polarion-proposed-evidence"
+        },
+        "formatVersion": {
+          "const": "0.2.0"
+        },
+        "runId": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+        },
+        "artifactKind": {
+          "const": "pointer"
+        },
+        "bundlePath": {
+          "type": "string",
+          "minLength": 1
+        },
+        "manifestSha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      },
+      "required": [
+        "format",
+        "formatVersion",
+        "runId",
+        "artifactKind",
+        "bundlePath",
+        "manifestSha256"
+      ],
+      "additionalProperties": false
+    }
+  }
+}

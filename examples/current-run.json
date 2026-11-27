@@ -1,0 +1,8 @@
+{
+  "format": "srac-polarion-proposed-evidence",
+  "formatVersion": "0.2.0",
+  "runId": "211d9336-b307-4f67-9e32-453818c842db",
+  "artifactKind": "pointer",
+  "bundlePath": "runs/211d9336-b307-4f67-9e32-453818c842db",
+  "manifestSha256": "c183b8b353af0df77b557da0f17df15d075a64fd3690b2f8b030d457e372d998"
+}
